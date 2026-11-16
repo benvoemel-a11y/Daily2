@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#000">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="manifest.json">
+<title>daily</title>
+<style>
+:root{--bg:#000;--ink:#b8b8b8;--dim:#555;--line:#161616;--edge:#2c2c2c;--fill:#c8a44d;--red:#d93f37;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-text-size-adjust:100%;background:var(--bg);color:var(--ink);font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,textarea{-webkit-user-select:text;user-select:text;font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--edge);padding:10px 0;width:100%;outline:none;border-radius:0}
+input:focus,textarea:focus{border-color:var(--fill)}
+textarea{border:1px solid var(--edge);border-radius:8px;padding:10px}
+#app{max-width:520px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 10px) 20px calc(env(safe-area-inset-bottom) + 40px)}
+header{position:sticky;top:0;background:var(--bg);z-index:2;padding:10px 0 0;display:flex;align-items:center;gap:8px}
+.dnum{font-size:64px;line-height:.9;font-weight:800;color:var(--ink);letter-spacing:-3px;margin-right:6px}
+.logo{align-self:flex-end;margin-bottom:4px;color:var(--ink);font-weight:700;font-size:16px;letter-spacing:.5px}
+.sp{flex:1}
+.circ{width:32px;height:32px;display:grid;place-items:center;font-size:18px;color:var(--dim)}
+#gear svg{transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+#gear.spin svg{transform:rotate(90deg)}
+.bar{height:1px;background:var(--line);margin:10px 0 0;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--fill);transition:width .4s}
+#sub{color:var(--dim);font-size:11px;display:flex;justify-content:space-between;padding:8px 0 4px;letter-spacing:.5px}
+.sec{font-size:10px;letter-spacing:2px;color:#3a3a3a;margin:56px 0 14px}
+.row{display:flex;align-items:center;gap:12px;padding:16px 0;cursor:pointer}
+.row .t{flex:1;min-width:0}
+.row .n{font-size:14px;transition:color .2s}
+.row .m{font-size:10px;color:var(--dim);margin-top:5px}
+.row.done .n{color:var(--dim)}
+.chk{width:18px;height:18px;border:1px solid var(--edge);border-radius:50%;flex:none;transition:background .2s,border-color .2s}
+.chk.on{background:var(--fill);border-color:var(--fill)}
+.mini{height:1px;background:var(--line);margin-top:8px}
+.mini i{display:block;height:100%;background:var(--fill)}
+.empty{color:var(--dim);padding:30px 0;font-size:12px}
+.wk{display:flex;align-items:center;justify-content:space-between;color:var(--dim);font-size:12px;margin-bottom:10px}
+.wk button{width:28px;height:28px;color:var(--dim)}
+table{width:100%;border-collapse:collapse}
+th{font-weight:400;font-size:10px;color:var(--dim);padding-bottom:8px}
+th.today{color:var(--ink);box-shadow:inset 0 -1px 0 var(--red)}
+td{text-align:center;padding:5px 0}
+td.nm{text-align:left;font-size:12px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:6px}
+td.wc{font-size:11px;color:var(--dim);text-align:right;width:34px}
+.cell{width:20px;height:20px;margin:auto;border-radius:5px;display:block}
+.cell.pl{border:1px solid var(--edge)}
+.cell.ok{background:var(--fill)}
+.cell.miss{border:1px solid var(--edge);background:linear-gradient(var(--edge),var(--edge)) center/8px 1px no-repeat}
+.cell.np::after{content:"";display:block;width:2px;height:2px;border-radius:50%;background:var(--edge);margin:9px auto}
+.stats{display:flex;justify-content:space-between;margin:6px 0 26px}
+.stats div b{display:block;font-size:20px;font-weight:400;color:var(--ink)}
+.stats div span{font-size:10px;color:var(--dim);letter-spacing:.5px}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px;margin-top:28px}
+.heat i{aspect-ratio:1;border-radius:2px;display:block;background:#0d0d0d}
+.hr{margin-top:22px}
+.hr .r{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}
+.hr .r span:last-child{color:var(--dim)}
+.track2{height:1px;background:var(--line)}
+.track2 i{display:block;height:100%;background:var(--fill)}
+#veil{position:fixed;inset:0;background:rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .2s;z-index:5}
+#veil.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:50%;bottom:0;width:100%;max-width:520px;transform:translate(-50%,105%);background:#070707;border-top:1px solid var(--edge);border-top-left-radius:18px;border-top-right-radius:18px;padding:20px 20px calc(env(safe-area-inset-bottom) + 20px);z-index:6;transition:transform .3s cubic-bezier(.25,.9,.3,1),visibility .3s;max-height:88vh;overflow-y:auto;visibility:hidden}
+.sheet.on{transform:translate(-50%,0);visibility:visible}
+.sh{display:flex;align-items:center;margin-bottom:10px}
+.sh b{font-weight:400;flex:1}
+.x{width:12px;height:12px;border-radius:50%;background:var(--edge)}
+label{display:block;font-size:10px;color:var(--dim);letter-spacing:1px;margin:20px 0 8px;text-transform:uppercase}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid var(--edge);border-radius:999px;padding:6px 12px;font-size:12px;color:var(--dim)}
+.seg button.on{border-color:var(--fill);color:var(--ink)}
+.days button{width:38px;padding:6px 0}
+.two{display:flex;gap:10px}
+.btn{display:block;width:100%;border:1px solid var(--edge);border-radius:10px;padding:12px;margin-top:20px;text-align:center;color:var(--ink)}
+.btn.fill{background:var(--fill);border-color:var(--fill);color:#000}
+.btn.red{color:var(--dim);border-color:transparent;margin-top:6px}
+.lst{display:flex;align-items:center;gap:6px;padding:10px 0;border-bottom:1px solid var(--line)}
+.lst .t{flex:1;font-size:13px}
+.lst .t small{display:block;color:var(--dim);font-size:10px;margin-top:3px}
+.lst button{width:28px;height:28px;color:var(--dim);font-size:12px}
+.big{font-size:30px;text-align:center}
+.note{font-size:11px;color:var(--dim);margin-top:8px;line-height:1.5}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    
+    <div class="dnum" id="dnum"></div><div class="logo" id="ttl"></div><div class="sp"></div>
+    <button class="circ" id="add" aria-label="Habit hinzufügen">+</button>
+    <button class="circ" id="gear" aria-label="Einstellungen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2.2" fill="#000"/><circle cx="15" cy="17" r="2.2" fill="#000"/></svg></button>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div id="sub"><span id="date"></span><span id="cnt"></span></div>
+  <section class="page" id="pToday"></section>
+  <div class="sec">WOCHE</div>
+  <section class="page" id="pWeek"></section>
+
+</div>
+<div id="veil"></div>
+<div class="sheet" id="sheet"></div>
+
+<script>
+const DAYS=['Mo','Di','Mi','Do','Fr','Sa','So'];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const key=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const dIdx=d=>(d.getDay()+6)%7;
+const today=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
+const fmtN=n=>Number(n).toLocaleString('de-DE');
+const uid=()=>Math.random().toString(36).slice(2,9);
+
+let S=null,weekOff=0,ref=null;
+
+function defaults(){const k=key(today());return{habits:[
+  {id:uid(),name:'10k Schritte',type:'count',target:10000,unit:'Schritte',days:[0,1,2,3,4,5,6],created:k},
+  {id:uid(),name:'Laufen',type:'check',target:1,unit:'',days:[0,2,5],created:k}],log:{}}}
+function valid(o){return o&&Array.isArray(o.habits)&&o.log&&typeof o.log==='object'}
+
+/* ---------- Logik ---------- */
+const planned=(h,d)=>h.days.includes(dIdx(d))&&key(d)>=h.created;
+const val=(h,k)=>(S.log[k]||{})[h.id]||0;
+const isDone=(h,k)=>val(h,k)>=(h.type==='count'?h.target:1);
+function dayStat(d){const k=key(d);let p=0,n=0;S.habits.forEach(h=>{if(planned(h,d)){p++;if(isDone(h,k))n++}});return{p,n}}
+function setVal(h,k,v){S.log[k]=S.log[k]||{};if(v>0)S.log[k][h.id]=v;else delete S.log[k][h.id];if(!Object.keys(S.log[k]).length)delete S.log[k];save();render()}
+function toggle(h,k){if(h.type==='count')setVal(h,k,isDone(h,k)?0:h.target);else setVal(h,k,isDone(h,k)?0:1)}
+const earliest=()=>S.habits.reduce((m,h)=>h.created<m?h.created:m,key(today()));
+function streak(fn){let d=today(),c=0;const e=earliest();const s0=fn(d);if(s0.p&&s0.n<s0.p)d=addD(d,-1);
+  for(let i=0;i<730&&key(d)>=e;i++,d=addD(d,-1)){const s=fn(d);if(!s.p)continue;if(s.n===s.p)c++;else break}return c}
+function rate(fn,days){let p=0,n=0,d=today();for(let i=0;i<days;i++,d=addD(d,-1)){const s=fn(d);p+=s.p;n+=s.n}return p?Math.round(n/p*100):null}
+const habFn=h=>d=>{const pl=planned(h,d);return{p:pl?1:0,n:pl&&isDone(h,key(d))?1:0}};
+function shade(f){const a=[40,40,40],b=[200,164,77];return'rgb('+a.map((v,i)=>Math.round(v+(b[i]-v)*f)).join(',')+')'}
+const daysTxt=h=>h.days.length===7?'täglich':h.days.slice().sort().map(i=>DAYS[i]).join(' · ');
+
+/* ---------- Render ---------- */
+function render(){
+  $('ttl').textContent=S.title||'';$('dnum').textContent=new Date().getDate();
+  const t=today(),k=key(t),s=dayStat(t),f=s.p?s.n/s.p:0;
+  $('prog').style.width=(f*100)+'%';
+  $('date').textContent=t.toLocaleDateString('de-DE',{weekday:'long'}).toUpperCase()+' · '+t.toLocaleDateString('de-DE',{month:'short'}).replace('.','').toUpperCase();
+  $('cnt').textContent=s.p?s.n+'/'+s.p+' erledigt':'';
+  renderToday(t,k);renderWeek();
+}
+function renderToday(t,k){
+  const list=S.habits.filter(h=>planned(h,t));
+  if(!S.habits.length){$('pToday').innerHTML='<div class="empty">Noch keine Habits. Tippe auf +.</div>';return}
+  if(!list.length){$('pToday').innerHTML='<div class="empty">Heute nichts geplant.</div>';return}
+  const sorted=list.filter(h=>!isDone(h,k)).concat(list.filter(h=>isDone(h,k)));
+  $('pToday').innerHTML=sorted.map(h=>{const d=isDone(h,k),v=val(h,k),w=weekCount(h);
+    const m=(h.type==='count'?fmtN(v)+' / '+fmtN(h.target)+' '+esc(h.unit):'')+(h.days.length<7?(h.type==='count'?' · ':'')+w.n+'/'+w.p+' diese Woche':(h.type==='count'?'':'täglich'));
+    const mini='';
+    return'<div class="row'+(d?' done':'')+'" data-h="'+h.id+'"><div class="t"><div class="n">'+esc(h.name)+'</div><div class="m">'+m+'</div>'+mini+'</div><button class="chk'+(d?' on':'')+'" data-c="'+h.id+'" aria-label="abhaken"></button></div>'}).join('');
+}
+function weekCount(h,ws){ws=ws||addD(today(),-dIdx(today()));let p=0,n=0;for(let i=0;i<7;i++){const d=addD(ws,i);if(planned(h,d)){p++;if(isDone(h,key(d)))n++}}return{p,n}}
+function weekStart(){const t=today();return addD(t,-dIdx(t)+weekOff*7)}
+function kw(d){const x=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=x.getUTCDay()||7;x.setUTCDate(x.getUTCDate()+4-n);const y=new Date(Date.UTC(x.getUTCFullYear(),0,1));return Math.ceil(((x-y)/864e5+1)/7)}
+function renderWeek(){
+  const ws=weekStart(),tk=key(today()),days=[...Array(7)].map((_,i)=>addD(ws,i));
+  let h='<div class="wk"><button data-w="-1">‹</button><span>KW '+kw(ws)+'</span><button data-w="1">›</button></div>';
+  if(!S.habits.length){$('pWeek').innerHTML=h;return}
+  h+=dashHTML();
+  h+='<table><tr><th></th>'+days.map((d,i)=>'<th class="'+(key(d)===tk?'today':'')+'">'+DAYS[i]+'</th>').join('')+'<th></th></tr>';
+  S.habits.forEach(x=>{const w=weekCount(x,ws);h+='<tr><td class="nm">'+esc(x.name)+'</td>'+days.map(d=>{const k=key(d);
+    if(!planned(x,d))return'<td><span class="cell np"></span></td>';
+    const ok=isDone(x,k),miss=!ok&&k<tk;
+    return'<td><button class="cell '+(ok?'ok':miss?'miss':'pl')+'" data-t="'+x.id+'|'+k+'"></button></td>'}).join('')+'<td class="wc">'+(w.p?w.n+'/'+w.p:'')+'</td></tr>'});
+  $('pWeek').innerHTML=h+'</table>';
+}
+function dashHTML(){
+  const ws=weekStart();let wp=0,wn=0;const rows=S.habits.map(x=>{const w=weekCount(x,ws);wp+=w.p;wn+=w.n;return[x,w]});
+  const ds=dayStat(today());let h='<div class="stats">'+tile(ds.p?Math.round(ds.n/ds.p*100)+'%':'–','HEUTE')+tile(wp?Math.round(wn/wp*100)+'%':'–','WOCHE')+tile(wn+'/'+wp,'ERLEDIGT')+tile(wp-wn,'OFFEN')+'</div>';
+  return h;
+}
+const tile=(b,s)=>'<div><b>'+b+'</b><span>'+s+'</span></div>';
+function parseK(k){const[a,b,c]=k.split('-').map(Number);return new Date(a,b-1,c)}
+
+/* ---------- Seiten ---------- */
+document.addEventListener('gesturestart',e=>e.preventDefault());
+let lastT=0;document.addEventListener('touchend',e=>{const n=Date.now();if(n-lastT<300&&!e.target.closest('input,textarea'))e.preventDefault();lastT=n},{passive:false});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-c]');if(c){const h=S.habits.find(x=>x.id===c.dataset.c);if(h){toggle(h,key(today()));}return}
+  const cd=e.target.closest('.row[data-h]');if(cd){const h=S.habits.find(x=>x.id===cd.dataset.h);if(h&&h.type==='count')countSheet(h);else if(h)toggle(h,key(today()));return}
+  const w=e.target.closest('[data-w]');if(w){weekOff+=+w.dataset.w;renderWeek();return}
+  const tc=e.target.closest('[data-t]');if(tc){const[id,k]=tc.dataset.t.split('|');const h=S.habits.find(x=>x.id===id);if(h&&k<=key(today())){if(h.type==='count')countSheet(h,k);else toggle(h,k)}return}
+});
+
+/* ---------- Sheets ---------- */
+function openSheet(html){$('sheet').innerHTML=html;$('sheet').classList.add('on');$('veil').classList.add('on')}
+function closeSheet(){$('sheet').classList.remove('on');$('veil').classList.remove('on');$('gear').classList.remove('spin')}
+$('veil').onclick=closeSheet;
+const head=t=>'<div class="sh"><b>'+t+'</b><button class="x" data-close aria-label="Schließen"></button></div>';
+$('sheet').addEventListener('click',e=>{if(e.target.closest('[data-close]'))closeSheet()});
+
+function countSheet(h,k){k=k||key(today());const v=val(h,k);
+  openSheet(head(esc(h.name)+(k!==key(today())?' · '+k.slice(8)+'.'+k.slice(5,7)+'.':''))+
+    '<input class="big" id="cv" type="number" inputmode="numeric" value="'+(v||'')+'" placeholder="0">'+
+    '<div class="note" style="text-align:center">Ziel: '+fmtN(h.target)+' '+esc(h.unit)+'</div>'+
+    '<div class="two"><button class="btn" id="cz">Ziel erreicht</button><button class="btn fill" id="cs">Speichern</button></div>');
+  $('cz').onclick=()=>{setVal(h,k,h.target);closeSheet()};
+  $('cs').onclick=()=>{setVal(h,k,Math.max(0,+$('cv').value||0));closeSheet()};
+  $('cv').onkeydown=e=>{if(e.key==='Enter')$('cs').click()};
+}
+
+function habitSheet(h){const isNew=!h;h=h?JSON.parse(JSON.stringify(h)):{id:uid(),name:'',type:'check',target:1,unit:'',days:[0,1,2,3,4,5,6],created:key(today())};
+  const draw=()=>{openSheet(head(isNew?'Neues Habit':'Habit bearbeiten')+
+    '<label>Name</label><input id="hn" value="'+esc(h.name)+'" placeholder="z. B. Lesen">'+
+    '<label>Art</label><div class="seg" id="ht"><button data-v="check" class="'+(h.type==='check'?'on':'')+'">Abhaken</button><button data-v="count" class="'+(h.type==='count'?'on':'')+'">Zahl / Ziel</button></div>'+
+    (h.type==='count'?'<label>Ziel</label><div class="two"><input id="hg" type="number" inputmode="numeric" value="'+(h.target>1?h.target:'')+'" placeholder="10000"><input id="hu" value="'+esc(h.unit)+'" placeholder="Einheit"></div>':'')+
+    '<label>Tage</label><div class="seg days" id="hd">'+DAYS.map((d,i)=>'<button data-i="'+i+'" class="'+(h.days.includes(i)?'on':'')+'">'+d+'</button>').join('')+'</div>'+
+    '<div class="seg" style="margin-top:8px" id="hp"><button data-p="all">Täglich</button><button data-p="wd">Mo–Fr</button><button data-p="we">Wochenende</button></div>'+
+    '<button class="btn fill" id="hs">Speichern</button>'+(isNew?'':'<button class="btn red" id="hx">Löschen</button>'));
+    const sync=()=>{h.name=$('hn').value;if($('hg')){h.target=+$('hg').value||1;h.unit=$('hu').value}};
+    $('ht').onclick=e=>{const b=e.target.closest('button');if(!b)return;sync();h.type=b.dataset.v;if(h.type==='check'){h.target=1}draw()};
+    $('hd').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;h.days=h.days.includes(i)?h.days.filter(x=>x!==i):[...h.days,i];b.classList.toggle('on');b.classList.add('pop');setTimeout(()=>b.classList.remove('pop'),300)};
+    $('hp').onclick=e=>{const b=e.target.closest('button');if(!b)return;sync();h.days={all:[0,1,2,3,4,5,6],wd:[0,1,2,3,4],we:[5,6]}[b.dataset.p];draw()};
+    $('hs').onclick=()=>{sync();h.name=h.name.trim();if(!h.name){$('hn').focus();$('hn').style.borderColor='var(--fill)';return}
+      if(!h.days.length){$('hd').style.outline='1px solid var(--fill)';return}
+      if(h.type==='count'&&!(h.target>0))h.target=1;h.days.sort();
+      const i=S.habits.findIndex(x=>x.id===h.id);if(i<0)S.habits.push(h);else S.habits[i]=h;save();render();closeSheet()};
+    if($('hx')){let arm=false;$('hx').onclick=()=>{if(!arm){arm=true;$('hx').textContent='Wirklich löschen?';return}
+      S.habits=S.habits.filter(x=>x.id!==h.id);Object.keys(S.log).forEach(k=>{delete S.log[k][h.id];if(!Object.keys(S.log[k]).length)delete S.log[k]});save();render();closeSheet()}}
+  };draw();if(isNew)setTimeout(()=>$('hn')&&$('hn').focus(),320);
+}
+$('add').onclick=()=>habitSheet();
+
+function settings(){$('gear').classList.add('spin');
+  const draw=()=>{openSheet(head('Einstellungen')+'<label>Projektname</label><input id="pt" placeholder="optional" value="'+esc(S.title||'')+'">'+'<label>Habits</label>'+
+    (S.habits.length?S.habits.map((h,i)=>'<div class="lst"><div class="t">'+esc(h.name)+'<small>'+(h.type==='count'?fmtN(h.target)+' '+esc(h.unit)+' · ':'')+daysTxt(h)+'</small></div>'+
+      '<button data-u="'+i+'">↑</button><button data-d="'+i+'">↓</button><button data-e="'+h.id+'">✎</button></div>').join(''):'<div class="note">Noch keine Habits.</div>')+
+    '<button class="btn" id="sa">+ Habit hinzufügen</button>'+
+    '<label style="margin-top:30px">Backup</label><div class="note">Kopiert alle Daten als Text – z. B. in Notizen speichern. Zum Wiederherstellen unten einfügen.</div>'+
+    '<button class="btn" id="bc">Backup kopieren</button>'+
+    '<textarea id="bi" rows="3" style="margin-top:10px" placeholder="Backup hier einfügen"></textarea><button class="btn" id="br">Wiederherstellen</button><div class="note" id="bm"></div>'+
+    '<button class="btn red" id="rs">Fortschritt zurücksetzen</button>'+
+    '<div class="note" id="sync" style="margin-top:16px">'+syncTxt+'</div>');
+    $('sheet').querySelectorAll('[data-u],[data-d]').forEach(b=>b.onclick=()=>{const i=+(b.dataset.u??b.dataset.d),j=b.dataset.u!=null?i-1:i+1;if(j<0||j>=S.habits.length)return;[S.habits[i],S.habits[j]]=[S.habits[j],S.habits[i]];save();render();draw()});
+    $('sheet').querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>habitSheet(S.habits.find(x=>x.id===b.dataset.e)));
+    $('sa').onclick=()=>habitSheet();
+    $('pt').oninput=()=>{S.title=$('pt').value.trim();$('ttl').textContent=S.title;save()};
+    $('bc').onclick=async()=>{try{await navigator.clipboard.writeText(JSON.stringify(S));$('bm').textContent='Kopiert.'}catch(e){$('bi').value=JSON.stringify(S);$('bi').select();$('bm').textContent='Kopieren blockiert – Text oben markiert, manuell kopieren.'}};
+    let arm=false;$('rs').onclick=()=>{if(!arm){arm=true;$('rs').textContent='Wirklich alles zurücksetzen?';return}S.log={};const k=key(today());S.habits.forEach(h=>h.created=k<h.created?h.created:k);save();render();closeSheet()};
+    $('br').onclick=()=>{try{const o=JSON.parse($('bi').value);if(!valid(o))throw 0;S=o;save();render();$('bm').textContent='Wiederhergestellt.';setTimeout(draw,600)}catch(e){$('bm').textContent='Ungültiges Backup.'}};
+  };draw();
+}
+$('gear').onclick=settings;
+
+/* ---------- Speichern ---------- */
+let saveT=null,saving=false,again=false,syncTxt='Nur lokal gespeichert (Browser).';
+function save(){try{localStorage.setItem('daily.v1',JSON.stringify(S))}catch(e){}if(!ref)return;clearTimeout(saveT);saveT=setTimeout(flush,700)}
+async function flush(){if(!ref)return;if(saving){again=true;return}saving=true;
+  try{await ref.set(JSON.parse(JSON.stringify(S)))}catch(e){setSync('Sync-Fehler – lokal gespeichert.')}
+  saving=false;if(again){again=false;flush()}}
+function setSync(t){syncTxt=t;const el=$('sync');if(el)el.textContent=t}
+
+try{const l=JSON.parse(localStorage.getItem('daily.v1'));if(valid(l))S=l}catch(e){}
+if(!S)S=defaults();
+render();
+setInterval(()=>{const k=key(today());if(k!==render.k){render.k=k;render()}},60000);render.k=key(today());
+
+(async()=>{
+  if(!window.claude||!claude.use)return;
+  try{
+    const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
+    const id=user&&await user.id();if(!db||!id)return;
+    ref=db.doc('data/users/'+id+'/daily');let first=true;
+    const tm=setTimeout(()=>setSync('Cloud noch nicht erreichbar – lokal gespeichert.'),10000);
+    ref.onSnapshot(s=>{
+      if(s.metadata.hasPendingWrites)return;
+      if(!s.metadata.fromCache)clearTimeout(tm);
+      if(s.exists){const d=s.data();if(valid(d)){S=JSON.parse(JSON.stringify(d));try{localStorage.setItem('daily.v1',JSON.stringify(S))}catch(e){}render()}}
+      else if(first&&!s.metadata.fromCache)flush();
+      if(!s.metadata.fromCache){first=false;setSync('Synchronisiert über iPhone & Mac.')}
+    },err=>{clearTimeout(tm);setSync('Sync getrennt – lokal gespeichert.')});
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
