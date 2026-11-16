@@ -279,17 +279,18 @@ function pushHTML(){const P=S.push||{};
   (P.on?'<div id="pr">'+(P.rem||[]).map((r,i)=>{r=typeof r==='string'?{t:r,text:''}:r;return'<div class="lst"><input type="time" value="'+r.t+'" data-pt="'+i+'" style="border:0;padding:4px 0;width:92px;flex:none"><input placeholder="Text (optional)" maxlength="60" value="'+esc(r.text||'')+'" data-pn="'+i+'" style="border:0;padding:4px 0;flex:1;min-width:0"><button data-px="'+i+'" aria-label="Löschen" style="color:var(--ink);font-size:16px">×</button></div>'}).join('')+'</div><button class="btn" id="pa">+ Uhrzeit</button>':'')+
   '<button class="btn" id="pb"></button>'+(P.on?'<button class="btn red" id="po">Mitteilungen aus</button>':'')}
 function pushMount(redraw){const P=S.push||{},ph=$('ph'),pb=$('pb');
+  P.rem=(P.rem||[]).map(r=>typeof r==='string'?{t:r,text:''}:r);
+  if($('pa'))$('pa').onclick=()=>{P.rem=[...P.rem,{t:'12:00',text:''}];save();redraw()};
+  document.querySelectorAll('[data-pt]').forEach(i=>i.onchange=()=>{P.rem[+i.dataset.pt].t=i.value;save()});
+  document.querySelectorAll('[data-pn]').forEach(i=>i.oninput=()=>{P.rem[+i.dataset.pn].text=i.value.trim();save()});
+  document.querySelectorAll('[data-px]').forEach(b=>b.onclick=()=>{P.rem.splice(+b.dataset.px,1);save();redraw()});
   if(!pushOk()){ph.innerHTML=standalone()?'Dieses Gerät unterstützt keine Mitteilungen (ab iOS 16.4).':'Mitteilungen gehen nur in der App vom Home-Bildschirm, nicht im Safari-Tab.';pb.style.display='none';return}
   if(Notification.permission==='denied'){ph.innerHTML='Blockiert. Einschalten unter iPhone-Einstellungen → Mitteilungen → daily.';pb.style.display='none';return}
   if(P.on&&P.sub){ph.textContent='An. Ohne Text: Erinnerung nur, wenn noch etwas offen ist. Mit Text: kommt immer.';pb.textContent='Test-Mitteilung senden'}
   else{ph.textContent='Erinnert dich an offene Habits.';pb.textContent='Mitteilungen einschalten'}
   pb.onclick=async()=>{pb.disabled=true;try{if(P.on&&P.sub){const s=await testPush();ph.textContent=s?'Test gesendet.':'Senden fehlgeschlagen.'}else{await enablePush();redraw()}}catch(e){ph.textContent=e.message==='denied'?'Nicht erlaubt.':'Fehler beim Einschalten.'}pb.disabled=false};
   if($('po'))$('po').onclick=()=>{P.on=false;save();syncPush(true);redraw()};
-  P.rem=(P.rem||[]).map(r=>typeof r==='string'?{t:r,text:''}:r);
-  if($('pa'))$('pa').onclick=()=>{P.rem=[...P.rem,{t:'12:00',text:''}];save();redraw()};
-  document.querySelectorAll('[data-pt]').forEach(i=>i.onchange=()=>{P.rem[+i.dataset.pt].t=i.value;save()});
-  document.querySelectorAll('[data-pn]').forEach(i=>i.oninput=()=>{P.rem[+i.dataset.pn].text=i.value.trim();save()});
-  document.querySelectorAll('[data-px]').forEach(b=>b.onclick=()=>{P.rem.splice(+b.dataset.px,1);save();redraw()});
+
 }
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').then(()=>navigator.serviceWorker.ready).then(r=>r.pushManager&&r.pushManager.getSubscription()).then(sub=>{if(sub&&S.push&&S.push.on){S.push.sub=sub.toJSON();syncPush(true)}}).catch(()=>{});
 /* ---------- Speichern ---------- */
