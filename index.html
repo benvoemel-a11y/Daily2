@@ -13,7 +13,7 @@
 <style>
 :root{--bg:#000;--ink:#b8b8b8;--dim:#555;--line:#161616;--edge:#2c2c2c;--fill:#c8a44d;--red:#d93f37;color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
-html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-text-size-adjust:100%;background:var(--bg);color:var(--ink);font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
+html,body{touch-action:manipulation;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-text-size-adjust:100%;background:var(--bg);color:var(--ink);font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:14px}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 input,textarea{-webkit-user-select:text;user-select:text;font:inherit;font-size:16px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--edge);padding:10px 0;width:100%;outline:none;border-radius:0}
 input:focus,textarea:focus{border-color:var(--fill)}
@@ -181,8 +181,6 @@ const tile=(b,s)=>'<div><b>'+b+'</b><span>'+s+'</span></div>';
 function parseK(k){const[a,b,c]=k.split('-').map(Number);return new Date(a,b-1,c)}
 
 /* ---------- Seiten ---------- */
-document.addEventListener('gesturestart',e=>e.preventDefault());
-let lastT=0;document.addEventListener('touchend',e=>{const n=Date.now();if(n-lastT<300&&!e.target.closest('input,textarea'))e.preventDefault();lastT=n},{passive:false});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
 
 document.addEventListener('click',e=>{
