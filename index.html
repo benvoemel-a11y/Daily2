@@ -107,7 +107,7 @@ label{display:block;font-size:10px;color:var(--dim);letter-spacing:1px;margin:20
 <div class="sheet" id="sheet"></div>
 
 <script>
-const VER='4';
+const VER='5';
 if(location.protocol.startsWith('http')&&!window.claude)fetch('version.txt?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():null).then(v=>{v=v&&v.trim();if(v&&v!==VER&&!sessionStorage.getItem('upd'+v)){sessionStorage.setItem('upd'+v,1);location.replace(location.pathname+'?v='+v)}}).catch(()=>{});
 const DAYS=['Mo','Di','Mi','Do','Fr','Sa','So'];
 const $=id=>document.getElementById(id);
@@ -237,7 +237,7 @@ function settings(){$('gear').classList.add('spin');
     (S.habits.length?S.habits.map((h,i)=>'<div class="lst"><div class="t">'+esc(h.name)+'<small>'+(h.type==='count'?fmtN(h.target)+' '+esc(h.unit)+' · ':'')+daysTxt(h)+'</small></div>'+
       '<button data-u="'+i+'">↑</button><button data-d="'+i+'">↓</button><button data-e="'+h.id+'">✎</button></div>').join(''):'<div class="note">Noch keine Habits.</div>')+
     '<button class="btn" id="sa">+ Habit hinzufügen</button>'+
-    '<label style="margin-top:30px">Backup</label><div class="note">Kopiert alle Daten als Text – z. B. in Notizen speichern. Zum Wiederherstellen unten einfügen.</div>'+
+    pushHTML()+'<label style="margin-top:30px">Backup</label><div class="note">Kopiert alle Daten als Text – z. B. in Notizen speichern. Zum Wiederherstellen unten einfügen.</div>'+
     '<button class="btn" id="bc">Backup kopieren</button>'+
     '<textarea id="bi" rows="3" style="margin-top:10px" placeholder="Backup hier einfügen"></textarea><button class="btn" id="br">Wiederherstellen</button><div class="note" id="bm"></div>'+
     '<button class="btn red" id="rs">Fortschritt zurücksetzen</button>'+
@@ -245,6 +245,7 @@ function settings(){$('gear').classList.add('spin');
     $('sheet').querySelectorAll('[data-u],[data-d]').forEach(b=>b.onclick=()=>{const i=+(b.dataset.u??b.dataset.d),j=b.dataset.u!=null?i-1:i+1;if(j<0||j>=S.habits.length)return;[S.habits[i],S.habits[j]]=[S.habits[j],S.habits[i]];save();render();draw()});
     $('sheet').querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>habitSheet(S.habits.find(x=>x.id===b.dataset.e)));
     $('sa').onclick=()=>habitSheet();
+    pushMount(draw);
     $('pt').oninput=()=>{S.title=$('pt').value.trim();$('ttl').textContent=S.title;save()};
     $('bc').onclick=async()=>{try{await navigator.clipboard.writeText(JSON.stringify(S));$('bm').textContent='Kopiert.'}catch(e){$('bi').value=JSON.stringify(S);$('bi').select();$('bm').textContent='Kopieren blockiert – Text oben markiert, manuell kopieren.'}};
     let arm=false;$('rs').onclick=()=>{if(!arm){arm=true;$('rs').textContent='Wirklich alles zurücksetzen?';return}S.log={};const k=key(today());S.habits.forEach(h=>h.created=k<h.created?h.created:k);save();render();closeSheet()};
@@ -253,9 +254,45 @@ function settings(){$('gear').classList.add('spin');
 }
 $('gear').onclick=settings;
 
+
+/* ---------- Mitteilungen ---------- */
+const SB_URL='https://wjbvodjiqjtlezuzgrzn.supabase.co',SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndqYnZvZGppcWp0bGV6dXpncnpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxMjk5NDAsImV4cCI6MjEwODcwNTk0MH0.hk7c23aKSk_O8bUMJoL2ActBDHpAdOgxZI9K_0bvEyM',VAPID='BHPjUxqV43w27uoafzmAF8qeh_7blis-VD0VudF0Is2K0UhsVhQCrLEVZngqnyxXdjRFYRheyJMf0l1AoOiZhGY';
+const pushOk=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const b64u=s=>{const b=atob((s+'='.repeat((4-s.length%4)%4)).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from(b,c=>c.charCodeAt(0))};
+const rhex=n=>[...crypto.getRandomValues(new Uint8Array(n))].map(b=>b.toString(16).padStart(2,'0')).join('');
+function pcfg(){if(!S.push||!S.push.id){const h=rhex(16);S.push={id:h.slice(0,8)+'-'+h.slice(8,12)+'-4'+h.slice(13,16)+'-a'+h.slice(17,20)+'-'+h.slice(20,32),token:rhex(24),on:false,rem:['20:00']}}return S.push}
+const tz=()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'Europe/Berlin'}catch(e){return'Europe/Berlin'}};
+let pT=null;
+function syncPush(now){const P=S.push;if(!P||!P.id)return Promise.resolve();clearTimeout(pT);
+  const run=()=>{const t=today(),done={};[-1,0,1].forEach(o=>{const d=addD(t,o),k=key(d);done[k]=S.habits.filter(h=>isDone(h,k)).map(h=>h.id)});
+    const cfg={on:!!P.on,sub:P.sub||null,rem:P.rem||[],title:S.title||'',habits:S.habits.map(h=>({id:h.id,n:h.name,days:h.days,c:h.created})),done};
+    return fetch(SB_URL+'/rest/v1/rpc/daily_save',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({p_id:P.id,p_token:P.token,p_cfg:cfg,p_tz:tz()})}).catch(()=>{})};
+  if(now)return run();pT=setTimeout(run,1500);return Promise.resolve()}
+async function enablePush(){const perm=await Notification.requestPermission();if(perm!=='granted')throw new Error('denied');
+  const reg=await navigator.serviceWorker.ready;let sub=await reg.pushManager.getSubscription();
+  if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID)});
+  const P=pcfg();P.sub=sub.toJSON();P.on=true;try{localStorage.setItem('daily.v1',JSON.stringify(S))}catch(e){}await syncPush(true)}
+async function testPush(){const P=pcfg();await syncPush(true);const r=await fetch(SB_URL+'/functions/v1/daily-push',{method:'POST',headers:{'Content-Type':'application/json',apikey:SB_KEY},body:JSON.stringify({type:'test',id:P.id,token:P.token})});const j=await r.json().catch(()=>({}));return j.sent}
+function pushHTML(){const P=S.push||{};
+  return '<label style="margin-top:30px">Mitteilungen</label><div class="note" id="ph"></div>'+
+  (P.on?'<div id="pr">'+(P.rem||[]).map((t,i)=>'<div class="lst"><input type="time" value="'+t+'" data-pt="'+i+'" style="border:0;padding:4px 0;flex:1"><button data-px="'+i+'">×</button></div>').join('')+'</div><button class="btn" id="pa">+ Uhrzeit</button>':'')+
+  '<button class="btn" id="pb"></button>'+(P.on?'<button class="btn red" id="po">Mitteilungen aus</button>':'')}
+function pushMount(redraw){const P=S.push||{},ph=$('ph'),pb=$('pb');
+  if(!pushOk()){ph.innerHTML=standalone()?'Dieses Gerät unterstützt keine Mitteilungen (ab iOS 16.4).':'Mitteilungen gehen nur in der App vom Home-Bildschirm, nicht im Safari-Tab.';pb.style.display='none';return}
+  if(Notification.permission==='denied'){ph.innerHTML='Blockiert. Einschalten unter iPhone-Einstellungen → Mitteilungen → daily.';pb.style.display='none';return}
+  if(P.on&&P.sub){ph.textContent='An. Zu den Uhrzeiten kommt eine Mitteilung, wenn noch etwas offen ist.';pb.textContent='Test-Mitteilung senden'}
+  else{ph.textContent='Erinnert dich an offene Habits.';pb.textContent='Mitteilungen einschalten'}
+  pb.onclick=async()=>{pb.disabled=true;try{if(P.on&&P.sub){const s=await testPush();ph.textContent=s?'Test gesendet.':'Senden fehlgeschlagen.'}else{await enablePush();redraw()}}catch(e){ph.textContent=e.message==='denied'?'Nicht erlaubt.':'Fehler beim Einschalten.'}pb.disabled=false};
+  if($('po'))$('po').onclick=()=>{P.on=false;save();syncPush(true);redraw()};
+  if($('pa'))$('pa').onclick=()=>{P.rem=[...(P.rem||[]),'12:00'];save();redraw()};
+  document.querySelectorAll('[data-pt]').forEach(i=>i.onchange=()=>{P.rem[+i.dataset.pt]=i.value;save()});
+  document.querySelectorAll('[data-px]').forEach(b=>b.onclick=()=>{P.rem.splice(+b.dataset.px,1);save();redraw()});
+}
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').then(()=>navigator.serviceWorker.ready).then(r=>r.pushManager&&r.pushManager.getSubscription()).then(sub=>{if(sub&&S.push&&S.push.on){S.push.sub=sub.toJSON();syncPush(true)}}).catch(()=>{});
 /* ---------- Speichern ---------- */
 let saveT=null,saving=false,again=false,syncTxt='Nur lokal gespeichert (Browser).';
-function save(){try{localStorage.setItem('daily.v1',JSON.stringify(S))}catch(e){}if(!ref)return;clearTimeout(saveT);saveT=setTimeout(flush,700)}
+function save(){try{localStorage.setItem('daily.v1',JSON.stringify(S))}catch(e){}if(S.push&&S.push.on)syncPush();if(!ref)return;clearTimeout(saveT);saveT=setTimeout(flush,700)}
 async function flush(){if(!ref)return;if(saving){again=true;return}saving=true;
   try{await ref.set(JSON.parse(JSON.stringify(S)))}catch(e){setSync('Sync-Fehler – lokal gespeichert.')}
   saving=false;if(again){again=false;flush()}}
